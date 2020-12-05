@@ -1,5 +1,4 @@
 import { SplashRoutingModule } from './splash-routing.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from './../../shared/shared.module';
 import { SplashComponent } from './splash.component';
 import { NgModule } from '@angular/core';
