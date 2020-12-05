@@ -1,1 +1,90 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$boggle-ui-primary: mat-palette($mat-indigo);
+$boggle-ui-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$boggle-ui-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$boggle-ui-theme: mat-light-theme((
+  color: (
+    primary: $boggle-ui-primary,
+    accent: $boggle-ui-accent,
+    warn: $boggle-ui-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($boggle-ui-theme);
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+$custom-typography: mat-typography-config(
+  $font-family: '"filson-pro", sans-serif;',
+  $headline: mat-typography-level(24px, 29px, 700),
+  $title: mat-typography-level(18px, 23px, 500),
+  $subheading-1: mat-typography-level(16px, 19px, 300),
+  $body-1: mat-typography-level(14px, 18px, 300),
+);
+@include mat-core($custom-typography);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$boggle-primary: mat-palette($mat-indigo);
+$boggle-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$boggle-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$boggle-theme: mat-light-theme(
+  (
+    color: (
+      primary: $boggle-primary,
+      accent: $boggle-accent,
+      warn: $boggle-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($boggle-theme);
+
 /* You can add global styles to this file, and also import other style files */
+@import '../src/assets/scss/main';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
