@@ -5,10 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material.module';
+import { SplashComponent } from './features/splash/splash.component';
+import { SinglePlayerComponent } from './features/single-player/single-player.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SplashComponent,
+    SinglePlayerComponent
   ],
   imports: [
     BrowserModule,
