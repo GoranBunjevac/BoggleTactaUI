@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-splash',
   templateUrl: './splash.component.html',
 })
 export class SplashComponent implements OnInit {
-  constructor() {}
+  constructor(private _router: Router) {}
 
   ngOnInit(): void {}
+
+  openSinglePlayerGame = () => {
+    this._router.navigate(['/single-player']);
+  };
 }
