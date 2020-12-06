@@ -1,19 +1,56 @@
-<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
-  <div fxLayout="column" fxFlex="50" fxLayoutGap="20px">
-    <mat-grid-list cols="4" rows="4" rowHeight="1:1">
-      <mat-grid-tile *ngFor="let dice of dices">{{ dice?.letter }}</mat-grid-tile>
-    </mat-grid-list>
+<div fxLayout="row" fxLayoutAlign="center center" fxFill>
+  <div fxFlex="50" fxFlexAlign="center">
+    <div class="content" fxLayout="row wrap">
+      <div fxFlex="25%" *ngFor="let dice of dices">
+        <mat-card
+          class="mat-elevation-z4 card"
+          style="text-align: center"
+          (click)="selectDice($event, dice)"
+        >
+          <mat-card-content>
+            <p class="letter">{{ dice.letter }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
   </div>
-  <div fxLayout="column" fxFlex="50" fxLayoutGap="20px">
-    <p>Score</p>
-    <p>Time: {{ counter | formatTime }}</p>
-    <button
-      mat-raised-button
-      class="btn-blue start-game-btn"
-      [disabled]="isGameStarted"
-      (click)="startSinglePlayerGame()"
-    >
-      Start Game
-    </button>
+  <div fxFlex="50">
+    <div fxLayout="column wrap" fxLayoutAlign="center start" fxLayoutGap="50px" class="pl-150">
+      <div>
+        <p class="paragraph">Time: {{ counter | formatTime }}</p>
+        <button
+          mat-raised-button
+          class="btn-blue start-game-btn btn-typography"
+          [disabled]="isGameStarted"
+          (click)="startSinglePlayerGame()"
+        >
+          Start Game
+        </button>
+      </div>
+      <div>
+        <p class="paragraph">Current word: {{ getCurrentWord() | uppercase }}</p>
+        <button mat-raised-button class="btn-blue btn-typography" (click)="addToWordsList()">
+          Add to your words
+        </button>
+      </div>
+      <div>
+        <p class="paragraph">Your words:</p>
+        <div *ngIf="wordsList?.length; else noWords">
+          <span *ngFor="let word of wordsList">{{ word }}, </span>
+        </div>
+      </div>
+      <div>
+        <mat-card class="mat-elevation-z4 card">
+          <mat-card-header class="paragraph">Score</mat-card-header>
+          <mat-card-content class="card-content">
+            {{ score ? score : 0 }}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
   </div>
 </div>
+
+<ng-template #noWords>
+  <div class="words-list">Nothing found yet!</div>
+</ng-template>

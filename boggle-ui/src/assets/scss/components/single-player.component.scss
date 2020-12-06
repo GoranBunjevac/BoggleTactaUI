@@ -2,3 +2,26 @@
   max-width: 120px;
   text-align: center;
 }
+
+.content {
+  padding: 10px;
+}
+
+.card {
+  width: 100px;
+  height: 100px;
+}
+
+.selected-card {
+  background-color: lightskyblue;
+}
+
+.selected-card-letter {
+  color: white;
+}
+
+.letter {
+  font-size: 48px;
+  font-weight: 800;
+  color: lightskyblue;
+}
