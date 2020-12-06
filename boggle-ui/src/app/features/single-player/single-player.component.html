@@ -1,18 +1,14 @@
-<mat-grid-list cols="4" rows="4" rowHeight="1:1">
-  <mat-grid-tile>1</mat-grid-tile>
-  <mat-grid-tile>2</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
-  <mat-grid-tile>5</mat-grid-tile>
-  <mat-grid-tile>6</mat-grid-tile>
-  <mat-grid-tile>7</mat-grid-tile>
-  <mat-grid-tile>8</mat-grid-tile>
-  <mat-grid-tile>1</mat-grid-tile>
-  <mat-grid-tile>2</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
-  <mat-grid-tile>5</mat-grid-tile>
-  <mat-grid-tile>6</mat-grid-tile>
-  <mat-grid-tile>7</mat-grid-tile>
-  <mat-grid-tile>8</mat-grid-tile>
-</mat-grid-list>
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+  <div fxLayout="column" fxFlex="50" fxLayoutGap="20px">
+    <mat-grid-list cols="4" rows="4" rowHeight="1:1">
+      <mat-grid-tile *ngFor="let dice of dices">{{ dice.letter }}</mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div fxLayout="column" fxFlex="50" fxLayoutGap="20px">
+    <app-count-down></app-count-down>
+    <p>Score</p>
+    <button mat-raised-button class="btn-blue" (click)="startSinglePlayerGame()">
+      Start Game
+    </button>
+  </div>
+</div>
