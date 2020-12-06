@@ -5,9 +5,14 @@
     </mat-grid-list>
   </div>
   <div fxLayout="column" fxFlex="50" fxLayoutGap="20px">
-    <app-count-down></app-count-down>
     <p>Score</p>
-    <button mat-raised-button class="btn-blue" (click)="startSinglePlayerGame()">
+    <p>Time: {{ counter | formatTime }}</p>
+    <button
+      mat-raised-button
+      class="btn-blue start-game-btn"
+      [disabled]="isGameStarted"
+      (click)="startSinglePlayerGame()"
+    >
       Start Game
     </button>
   </div>

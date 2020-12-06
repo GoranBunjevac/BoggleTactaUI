@@ -1,3 +1,4 @@
+import { FormatTimePipe } from './shared/pipes/format-time.pipe';
 import { ApiRequestsInterceptor } from './core/api-requests-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
