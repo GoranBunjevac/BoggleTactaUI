@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
   <div fxLayout="column" fxFlex="50" fxLayoutGap="20px">
     <mat-grid-list cols="4" rows="4" rowHeight="1:1">
-      <mat-grid-tile *ngFor="let dice of dices">{{ dice.letter }}</mat-grid-tile>
+      <mat-grid-tile *ngFor="let dice of dices">{{ dice?.letter }}</mat-grid-tile>
     </mat-grid-list>
   </div>
   <div fxLayout="column" fxFlex="50" fxLayoutGap="20px">

@@ -3,5 +3,9 @@ export class Dice {
   public yPosition: number;
   public letter: string;
 
-  constructor(parameters) {}
+  constructor(x, y, letter) {
+    this.xPosition = x;
+    this.yPosition = y;
+    this.letter = letter;
+  }
 }

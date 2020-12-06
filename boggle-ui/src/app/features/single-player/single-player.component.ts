@@ -17,14 +17,20 @@ export class SinglePlayerComponent implements OnInit {
   constructor(private _singlePlayerService: SinglePlayerService) {}
 
   ngOnInit(): void {
-    this.loadBoardDices();
+    this.loadEmptyBoard();
   }
+
+  loadEmptyBoard = () => {
+    this.dices = new Array(16);
+    this.dices.fill(new Dice(0, 0, '?'));
+  };
 
   loadBoardDices = () => {
     this._singlePlayerService.getBoard().subscribe((response) => (this.dices = response));
   };
 
   startSinglePlayerGame = () => {
+    this.loadBoardDices();
     this.countDown = timer(0, this.tick).subscribe(() => {
       if (this.counter > 0) {
         --this.counter;
