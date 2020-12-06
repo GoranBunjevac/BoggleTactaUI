@@ -13,13 +13,12 @@
 
 .selected-card {
   background-color: lightskyblue;
-}
-
-.selected-card-letter {
-  color: white;
+  color: white !important;
 }
 
 .letter {
+  width: 100%;
+  height: 100%;
   font-size: 48px;
   font-weight: 800;
   color: lightskyblue;
@@ -28,4 +27,8 @@
 .score-card {
   width: 100px;
   height: 100px;
+}
+
+.board-size {
+  height: 80vh;
 }

@@ -1,16 +1,15 @@
 <div fxLayout="row" fxLayoutAlign="center center" fxFill>
   <div fxFlex="50" fxFlexAlign="center">
-    <div class="content" fxLayout="row wrap">
+    <div class="content" fxLayout="row wrap" class="board-size">
       <div fxFlex="25%" *ngFor="let dice of dices">
-        <mat-card
-          class="mat-elevation-z4 card"
-          style="text-align: center"
-          (click)="selectDice($event, dice)"
+        <button
+          mat-raised-button
+          fxFlexFill
+          class="letter"
+          (click)="onDiceClicked($event, dice)"
         >
-          <mat-card-content>
-            <p class="letter">{{ dice.letter }}</p>
-          </mat-card-content>
-        </mat-card>
+          {{ dice.letter }}
+        </button>
       </div>
     </div>
   </div>
@@ -29,7 +28,12 @@
       </div>
       <div>
         <p class="paragraph">Current word: {{ getCurrentWord() | uppercase }}</p>
-        <button mat-raised-button class="btn-blue btn-typography" (click)="addToWordsList()">
+        <button
+          mat-raised-button
+          class="btn-blue btn-typography"
+          (click)="addToWordsList()"
+          [disabled]="!isGameStarted"
+        >
           Add to your words
         </button>
       </div>

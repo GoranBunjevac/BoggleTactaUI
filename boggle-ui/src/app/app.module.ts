@@ -1,4 +1,4 @@
-import { FormatTimePipe } from './shared/pipes/format-time.pipe';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiRequestsInterceptor } from './core/api-requests-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -16,8 +16,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    TranslateModule.forRoot(),
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: ApiRequestsInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ApiRequestsInterceptor, multi: true },
+    TranslateService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

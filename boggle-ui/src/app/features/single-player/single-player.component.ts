@@ -2,6 +2,7 @@ import { SinglePlayerService } from './single-player.service';
 import { Component, OnInit } from '@angular/core';
 import { Dice } from './models/dice';
 import { Subscription, timer } from 'rxjs';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
 
 @Component({
   selector: 'app-single-player',
@@ -11,6 +12,7 @@ export class SinglePlayerComponent implements OnInit {
   dices: Array<Dice>;
   selectedDices = new Array<Dice>();
   wordsList = new Array<string>();
+  selectedElements = new Array<HTMLElement>();
   isGameStarted: boolean = false;
   lastSelectedDice: Dice;
   score: number;
@@ -19,7 +21,10 @@ export class SinglePlayerComponent implements OnInit {
   counter: number = 180;
   tick: number = 1000;
 
-  constructor(private _singlePlayerService: SinglePlayerService) {}
+  constructor(
+    private _singlePlayerService: SinglePlayerService,
+    private _toaster: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.loadEmptyBoard();
@@ -31,16 +36,21 @@ export class SinglePlayerComponent implements OnInit {
   };
 
   loadBoardDices = () => {
-    this._singlePlayerService.getBoard().subscribe((response) => (this.dices = response));
+    this._singlePlayerService.getBoard().subscribe(
+      (response) => (this.dices = response),
+      (_) => this._toaster.showError('Something went wrong. Try again later.')
+    );
   };
 
   startSinglePlayerGame = () => {
     this.loadBoardDices();
+    this.resetScore();
+    this.resetWordsList();
+    this.resetCurrentWord();
     this.countDown = timer(0, this.tick).subscribe(() => {
       if (this.counter > 0) {
         --this.counter;
-      }
-      if (this.counter === 0) {
+      } else {
         this.isGameStarted = false;
         this.resetCounter();
         this.calculateScore();
@@ -49,22 +59,29 @@ export class SinglePlayerComponent implements OnInit {
     this.isGameStarted = true;
   };
 
-  resetCounter = () => {
-    this.counter = 180;
-    this.countDown.unsubscribe();
-  };
-
-  selectDice = (event: Event, dice: Dice) => {
+  onDiceClicked = (event: Event, dice: Dice) => {
     if (this.isGameStarted) {
-      const selectedCard = event.target as HTMLElement;
-      const selectedCardLetter = selectedCard.getElementsByTagName('p');
-
-      selectedCard.classList.contains('selected-card')
-        ? selectedCard.classList.remove('selected-card')
-        : selectedCard.classList.add('selected-card');
-
       const selectIsValid = this.selectValidation(dice);
-      if (selectIsValid) {
+      if (!selectIsValid) {
+        this._toaster.showError('Please select adjacent dice neighbouring the current one');
+        return;
+      }
+
+      let selectedElement = event.target as HTMLElement;
+      if (selectedElement.nodeName === 'SPAN') {
+        selectedElement = selectedElement.offsetParent as HTMLElement;
+      }
+
+      if (selectedElement.classList.contains('selected-card')) {
+        const deselectIsValid = this.deselectValidation(dice);
+        if (deselectIsValid) {
+          selectedElement?.classList.remove('selected-card');
+        } else {
+          this._toaster.showError('You can remove only last selected letter.');
+        }
+      } else {
+        selectedElement?.classList.add('selected-card');
+        this.selectedElements.push(selectedElement);
         this.lastSelectedDice = dice;
         this.selectedDices.push(dice);
       }
@@ -76,17 +93,40 @@ export class SinglePlayerComponent implements OnInit {
   };
 
   addToWordsList = () => {
-    this.wordsList.push(this.getCurrentWord());
-    this.resetBoard();
+    let currentWord = this.getCurrentWord();
+    if (currentWord && currentWord !== '') {
+      this.wordsList.push(this.getCurrentWord());
+      this.resetBoard();
+    }
   };
 
-  calculateScore = () => {
+  private calculateScore = () => {
     this._singlePlayerService.getScore(this.wordsList).subscribe((res) => (this.score = res));
   };
 
   private resetBoard = () => {
-    this.selectedDices = new Array<Dice>();
+    this.resetCurrentWord();
     this.lastSelectedDice = null;
+    this.selectedElements.forEach((selectedCard) => {
+      selectedCard?.classList.remove('selected-card');
+    });
+  };
+
+  private resetScore = () => {
+    this.score = 0;
+  };
+
+  private resetWordsList = () => {
+    this.wordsList = new Array<string>();
+  };
+
+  private resetCurrentWord = () => {
+    this.selectedDices = new Array<Dice>();
+  };
+
+  private resetCounter = () => {
+    this.counter = 180;
+    this.countDown.unsubscribe();
   };
 
   private selectValidation = (dice: Dice): boolean => {
@@ -109,7 +149,17 @@ export class SinglePlayerComponent implements OnInit {
     );
   };
 
+  private deselectValidation = (dice: Dice): boolean => {
+    if (dice === this.lastSelectedDice) {
+      this.selectedDices.pop();
+      this.lastSelectedDice = this.selectedDices[this.selectedDices.length - 1];
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   ngOnDestroy() {
-    this.countDown = null;
+    this.countDown.unsubscribe();
   }
 }

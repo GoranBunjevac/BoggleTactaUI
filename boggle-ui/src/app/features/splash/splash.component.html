@@ -4,11 +4,23 @@
   </div>
 
   <div fxLayout fxLayoutAlign="center">
-    <div><img src="../assets/images/boggle.png" /></div>
+    <div>
+      <img
+        src="../assets/images/boggle.png"
+        width="500px"
+        height="380px"
+        class="pt-50 pb-50"
+      />
+    </div>
   </div>
 
   <div fxLayout fxLayoutAlign="center">
-    <button mat-raised-button class="btn-blue" (click)="openSinglePlayerGame()">
+    <button
+      class="btn-blue btn-typography single-player-btn"
+      mat-raised-button
+      class="btn-blue"
+      (click)="openSinglePlayerGame()"
+    >
       Single Player
     </button>
   </div>
