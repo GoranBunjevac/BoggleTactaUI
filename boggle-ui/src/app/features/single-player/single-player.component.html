@@ -36,7 +36,7 @@
       <div>
         <p class="paragraph">Your words:</p>
         <div *ngIf="wordsList?.length; else noWords">
-          <span *ngFor="let word of wordsList">{{ word }}, </span>
+          <span class="words-list" *ngFor="let word of wordsList">{{ word }}, </span>
         </div>
       </div>
       <div>
